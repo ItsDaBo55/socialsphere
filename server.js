@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 
         if (userId !== undefined && userId !== null) {
             try {
-                const response = await fetch(`https://socialsphere.atwebpages.com/api/user-exist.php?user=${userId}`);
+                const response = await fetch(`https://socialsphere.getenjoyment.net/api/user-exist.php?user=${userId}`);
                 if (response) {
                     notificationInterval = setInterval(async () => {
                         const unreadNotifications = await getUnreadNotifications(userId);
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
     socket.on('newPost', async (data) => {
         if (data.userId !== undefined && data.userId !== null) {
             try {
-                const response = await fetch(`https://socialsphere.atwebpages.com/api/user-exist.php?user=${data.userId}`);
+                const response = await fetch(`https://socialsphere.getenjoyment.net/api/user-exist.php?user=${data.userId}`);
                 if (response) {
                     const udata = await response.json();
                     const unreadNotifications = await getPost(data.userId, data.postId, udata.admin);
@@ -78,9 +78,9 @@ io.on('connection', (socket) => {
     socket.on('message', async (data) => {
         if (data.userId !== undefined && data.userId !== null && data.convId !== undefined && data.convId !== null) {
             try {
-                const response = await fetch(`https://socialsphere.atwebpages.com/api/user-exist.php?user=${data.userId}`);
+                const response = await fetch(`https://socialsphere.getenjoyment.net/api/user-exist.php?user=${data.userId}`);
                 if (response) {
-                    const convExist = await fetch(`https://socialsphere.atwebpages.com/api/user-conv.php?user=${data.userId}&conv=${data.convId}`);
+                    const convExist = await fetch(`https://socialsphere.getenjoyment.net/api/user-conv.php?user=${data.userId}&conv=${data.convId}`);
                     const cdata = await convExist.json();
                     if (cdata.success) {
                         const findSocket = users.find(s => s.user_id == cdata.other_user.id);
@@ -106,7 +106,7 @@ io.on('connection', (socket) => {
 
 async function getUnreadNotifications(id) {
     try {
-        const response = await fetch(`https://socialsphere.atwebpages.com/api/unread-noti.php?user=${id}`);
+        const response = await fetch(`https://socialsphere.getenjoyment.net/api/unread-noti.php?user=${id}`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -117,7 +117,7 @@ async function getUnreadNotifications(id) {
 
 async function getPost(uid, pid, admin) {
     try {
-        const response = await fetch(`https://socialsphere.atwebpages.com/api/get-post.php?user=${uid}&post=${pid}&admin=${admin}`);
+        const response = await fetch(`https://socialsphere.getenjoyment.net/api/get-post.php?user=${uid}&post=${pid}&admin=${admin}`);
         const data = await response.json();
         return data.post[0];
     } catch (error) {
